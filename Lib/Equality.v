@@ -277,9 +277,8 @@ Next Obligation.
   destruct x; simpl; auto.
   rewrite Eq_eq_dec_refl.
   unfold eq_rec_r, eq_rec; simpl_eq.
-  remember (Eq_eq_refl a) as p.
-  clear -p.
-*)
+  reflexivity.
+Defined.
 
 Import ListNotations.
 
