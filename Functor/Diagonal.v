@@ -58,8 +58,10 @@ Proof.
   reflexivity.
 Qed.
 
-Program Instance Transform_Const {C J : Category} `(x ~{C}~> y) :
-  =(x) ⟹ =(y).
+Instance Transform_Const {C : Category} `(x ~{C}~> y) : =(x) ⟹ =(y).
+Proof.
+  unshelve econstructor; intros; [assumption|cat|cat].
+Qed.
 
 (* jww (2017-04-13): TODO
 Class Complete `(C : Category) := {
