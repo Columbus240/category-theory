@@ -30,7 +30,14 @@ Class Transform := {
     transform ∘ fmap[F] f ≈ fmap[G] f ∘ transform
 }.
 
-Global Program Instance Transform_Setoid : Setoid Transform.
+Global Program Instance Transform_Setoid :
+  Setoid Transform :=
+  {| equiv N0 N1 :=
+       forall x, equiv (@transform N0 x) (@transform N1 x); |}.
+Next Obligation.
+  equivalence.
+  transitivity (@transform y x0); auto.
+Qed.
 
 End Transform.
 
