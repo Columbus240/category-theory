@@ -7,6 +7,7 @@ Import ListNotations.
 Require Import Category.Lib.
 Require Import Category.Lib.Nomega.
 Require Import Category.Lib.FMapExt.
+Import ListNotations.
 
 Generalizable All Variables.
 Set Transparent Obligations.
