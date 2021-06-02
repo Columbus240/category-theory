@@ -47,7 +47,15 @@ Next Obligation.
 Qed.
 Next Obligation.
   simplify.
-  - specialize (X (Datatypes.inl x0)); auto.
-  - specialize (X (Datatypes.inr x0)); auto.
+  - match goal with
+    | H : forall _ : ?a + ?b, _,
+      x : ?a |- _ =>
+      specialize (H (Datatypes.inl x)); auto
+    end.
+  - match goal with
+    | H : forall _ : ?a + ?b, _,
+      x : ?b |- _ =>
+      specialize (H (Datatypes.inr x)); auto
+    end.
   - destruct x0; auto.
 Qed.
