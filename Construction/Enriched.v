@@ -117,8 +117,11 @@ Proof.
     + now apply homset.
     + now proper.
     + proper; simpl.
-      apply compose_respects;
-      now destruct X0.
+      match goal with
+      | H : (_, _) ≈ (_, _) |- _ =>
+        destruct H; simpl in *
+      end.
+      apply compose_respects; assumption.
     + now simpl; intros; cat.
     + now simpl; intros; cat.
     + now simpl; intros; cat.
