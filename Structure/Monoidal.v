@@ -75,3 +75,47 @@ Notation "f ⨂ g" := (bimap[(⨂)] f g)
   (at level 30, right associativity) : morphism_scope.
 Notation "f ⨂[ M ] g" := (bimap[@tensor _ M] f g)
   (at level 30, only parsing, right associativity) : morphism_scope.
+
+Require Import Category.Structure.Terminal.
+
+Program Fixpoint tensor_power_obj {C : Category} `{@Terminal C} `{@Monoidal C}
+         (n : nat) (x : C) :=
+  match n with
+  | O => terminal_obj
+  | S n' => tensor (x, tensor_power_obj n' x)
+  end.
+
+Definition tensor_power_fmap {C : Category} `{@Terminal C} `{@Monoidal C} (n : nat) {x y : C} (f : x ~> y) : (tensor_power_obj n x) ~> (tensor_power_obj n y).
+Proof.
+  induction n.
+  - simpl. apply one.
+  - simpl.
+    apply tensor.
+    simpl.
+    split; assumption.
+Defined.
+
+Program Definition tensor_power {C : Category} `{@Terminal C} `{@Monoidal C}
+         (n : nat) : C ⟶ C :=
+  {| fobj := tensor_power_obj n;
+     fmap x y f := tensor_power_fmap n f;
+  |}.
+Next Obligation.
+  proper.
+  induction n.
+  - simpl. reflexivity.
+  - simpl. rewrite IHn. rewrite X. reflexivity.
+Qed.
+Next Obligation.
+  induction n.
+  - simpl. apply one_unique.
+  - simpl. rewrite IHn. cat.
+Qed.
+Next Obligation.
+  induction n.
+  - simpl. cat.
+  - simpl. rewrite IHn.
+    rewrite <- fmap_comp.
+    simpl.
+    reflexivity.
+Qed.
