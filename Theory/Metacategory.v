@@ -406,39 +406,4 @@ Proof.
   rewrite P.fold_Empty; auto; apply M.empty_1.
 Qed.
 
-(* Definition objects_of (M : Metacategory) : *)
-(*   ∀ P : nat → Type, P 0%nat → (∀ n : nat, P n → P (S n)) → ∀ n : nat, P n *)
-
-Local Obligation Tactic := program_simpl.
-
-(*
-Program Definition FromThree {C : Category} (c : C) : Three ⟶ C := {|
-  fobj := fun x =>
-   match x with
-   | existT _ 0%nat _ => c
-   | existT _ 1%nat _ => c
-   | existT _ 2%nat _ => c
-   | _ => False_rect _ _
-   end
-|}.
-Next Obligation.
-  destruct x. specialize (H1 X); contradiction.
-  destruct x. specialize (H X); contradiction.
-  destruct x. specialize (H0 X); contradiction.
-  destruct X.
-  pose proof (c0 0%nat).
-  unfold composite in H2; simpl in H2.
-  simplify_maps. structure.
-  simplify_maps. structure.
-  simplify_maps. structure.
-  simplify_maps. discriminate.
-  simplify_maps. structure.
-  simplify_maps. structure.
-  simplify_maps. structure.
-  simplify_maps. structure.
-  simplify_maps. discriminate.
-  simplify_maps. structure.
-Qed.
-*)
-
 End Metacategory.
