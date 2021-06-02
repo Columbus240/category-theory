@@ -231,3 +231,7 @@ Next Obligation.
 Qed.
 
 Notation "f ⊙ g" := (@iso_compose _ _ _ _ f g) (at level 40, left associativity).
+
+(* A property is called invariant, iff it is preserved by isomorphisms. *)
+Definition Invariant {C : Category} (P : C -> Prop) :=
+  forall x y, x ≅ y -> P x -> P y.
