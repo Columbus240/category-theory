@@ -182,14 +182,15 @@ Theorem adj_monic  {x y} (f : F x ~> y) c (g h : c ~> x) :
 Proof.
   intros.
   rewrite <- !to_adj_nat_l in X1.
-  pose proof (monic (Monic:=@iso_to_monic Sets _ _ (@adj H c y))
-                    {| carrier   := Datatypes.unit
-                     ; is_setoid := {| equiv := eq |} |}
-                    {| morphism  := fun _ => f ∘ fmap[F] g |}
-                    {| morphism  := fun _ => f ∘ fmap[F] h |}) as X2;
-  simpl in X2.
   apply X.
   apply X0.
+  assert ((() → ⌊ f ∘ fmap[F] g ⌋ ≈ ⌊ f ∘ fmap[F] h ⌋) → () → f ∘ fmap[F] g ≈ f ∘ fmap[F] h).
+  { pose (Monic:=@iso_to_monic Sets _ _ (@adj H c y)).
+    unshelve refine (@monic _ _ _ _ Monic {| carrier := Datatypes.unit |}
+                    {| morphism  := fun _ => f ∘ fmap[F] g |}
+                    {| morphism  := fun _ => f ∘ fmap[F] h |});
+      try proper; try refine {| equiv := eq |}; try equivalence.
+  }
   apply X2; intros.
   exact X1.
   exact tt.
