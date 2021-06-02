@@ -25,7 +25,11 @@ Proof.
         rewrite (naturality[X]); cat.
     + reflexivity.
   - transform; simpl; intros;
-    destruct X; subst.
+      destruct X;
+      match goal with
+      | H : _ = _ |- _ =>
+        destruct H
+      end.
     + apply x0.
     + cat; apply ump_cones.
     + cat; symmetry; apply ump_cones.
