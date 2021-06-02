@@ -37,5 +37,5 @@ Unset Transparent Obligations.
    set is equivalent to a poset. Finally, every subcategory of a poset is
    isomorphism-closed." *)
 
-Definition Poset {C : Category} `{R : relation C}
-           `(P : PreOrder C R) `{Asymmetric C R} : Category := Proset P.
+Definition Poset {C : Type} `{R : relation C}
+           `(P : PreOrder C R) `{@Antisymmetric C eq eq_equivalence R} : Category := Proset P.

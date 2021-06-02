@@ -102,6 +102,7 @@ Proof.
   destruct X as [X _].
   specialize (X x); simpl in X.
   unfold equiv_iso, η, κ, θ, φ in *; simpl in *.
+  (* TODO: Speed the following step up if possible. *)
   destruct (iso_from_to (lawvere_iso E)), (projG E), (projF E).
   simpl in *.
   destruct X; split.

@@ -58,6 +58,10 @@ Proof.
   reflexivity.
 Qed.
 
+(*TODO: Idealerweise wäre hier:
+Program Instance Transform_Const {C J : Category} `(x ~{C}~> y) : =(x) ⟹ =(y).
+Aber das löst eine Anomalie aus mit Coq v8.13.2.
+*)
 Global Instance Transform_Const {C : Category} `(x ~{C}~> y) : =(x) ⟹ =(y).
 Proof.
   unshelve econstructor; intros; [assumption|cat|cat].

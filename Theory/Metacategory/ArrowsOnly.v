@@ -287,6 +287,31 @@ Local Open Scope N_scope.
 
 Definition triangular_number (n : N) := (n * (n + 1)) / 2.
 
+Require Import Lia.
+
+Lemma triangular_number_succ (n : N) :
+  triangular_number (N.succ n) = triangular_number n + (N.succ n).
+Proof.
+  unfold triangular_number.
+  rewrite N.mul_succ_l.
+  rewrite <- N.add_1_r.
+  rewrite ?N.mul_add_distr_l.
+  rewrite N.mul_1_r.
+  rewrite <- N.add_assoc.
+  replace (n + (n + 1 + 1)) with ((n + 1)*2).
+  2: { lia. }
+  rewrite N.div_add.
+  2: { lia. }
+  reflexivity.
+Qed.
+
+Corollary triangular_number_succ_p (n : N) :
+  N.pred (triangular_number (N.succ n)) = triangular_number n + n.
+Proof.
+  rewrite triangular_number_succ.
+  lia.
+Qed.
+
 Definition composable_pairs_step (n : N) (z : M.t N) : M.t N :=
   let next := triangular_number (N.pred n) in
   let go i rest :=
@@ -301,16 +326,78 @@ Definition composable_pairs_step (n : N) (z : M.t N) : M.t N :=
 Definition composable_pairs : N -> M.t N :=
   N.peano_rect _ (M.empty _) (composable_pairs_step \o N.succ).
 
+Eval vm_compute in (composable_pairs 10).
+
 (* The number of composable pairs, for objects N, is the tetrahedral_number *)
 Definition tetrahedral_number (n : N) := (n * (n + 1) * (n + 2)) / 6.
 
 Local Obligation Tactic :=
   simpl; intros; vm_compute triangular_number in *; reflect_on_maps.
 
+Lemma composable_pairs_succ n : composable_pairs (N.succ n) = composable_pairs_step (N.succ n) (composable_pairs n).
+Proof.
+  unfold composable_pairs at 1.
+  rewrite N.peano_rect_succ.
+  fold composable_pairs.
+  simpl.
+  reflexivity.
+Qed.
+
+(* The right-hand-side of the equation is just a placeholder. Maybe we
+   need to replace [q] with [composable_pairs n] to get a reasonable
+   theorem.
+Lemma composable_pairs_succ' n q : composable_pairs_step (N.succ n) q = (*M.empty _*).
+Proof.
+  unfold composable_pairs_step.
+  rewrite ?N.pred_succ.
+  rewrite N.peano_rect_succ.
+  rewrite N.sub_succ_l; try reflexivity.
+  rewrite N.sub_diag.
+  simpl.
+  rewrite N.add_0_r.
+  generalize dependent q.
+  induction n using N.peano_rect; intros.
+  - simpl. replace (M.empty _) with (M.add (0, 0) 0 q); admit.
+  - rewrite N.peano_rect_succ.
+    rewrite ?N.sub_succ_l; try lia.
+    rewrite N.sub_diag.
+    rewrite N.peano_rect_succ.
+    rewrite N.peano_rect_succ.
+    rewrite N.add_0_r.
+    rewrite N.add_0_l.
+    rewrite <- N.add_assoc.
+    simpl (N.succ 0).
+    replace (1 + n) with (N.succ n). 2: { lia. }
+    replace (n + 1) with (N.succ n). 2: { lia. }
+    admit.
+Admitted.
+*)
+
+Section from_composablePairs.
+  Local Obligation Tactic := idtac.
+
+  Program Definition from_composablePairs (n : N) : Metacategory := {|
+    pairs := composable_pairs n
+  |}.
+  Next Obligation.
+    induction n using N.peano_rect; cbn; intros; [discriminate|].
+    admit.
+  Admitted.
+  Next Obligation.
+    induction n using N.peano_rect; cbn; intros; [discriminate|].
+    admit.
+  Admitted.
+  Next Obligation.
+    induction n using N.peano_rect; cbn; intros; [discriminate|].
+    admit.
+  Admitted.
+End from_composablePairs.
+
 Program Definition Zero  : Metacategory := {| pairs := composable_pairs 0 |}.
 Program Definition One   : Metacategory := {| pairs := composable_pairs 1 |}.
 Program Definition Two   : Metacategory := {| pairs := composable_pairs 2 |}.
 Program Definition Three : Metacategory := {| pairs := composable_pairs 3 |}.
+Program Definition Four  : Metacategory := {| pairs := composable_pairs 4 |}.
 
 Ltac elimobj X :=
   elimtype False;
@@ -504,14 +591,27 @@ Next Obligation.
 Qed.
 
 Local Obligation Tactic := simpl; intros.
+Print P.Disjoint.
 
-Lemma composable_pairs_succ n :
-  composable_pairs (N.succ n)
-    = composable_pairs_step (N.succ n) (composable_pairs n).
+Definition Subset {A : Type} (m m' : M.t A) :=
+  forall k, M.In (elt:=A) k m -> M.In (elt:=A) k m'.
+
+(* Is this lemma even true? *)
+Lemma composable_pairs_step_Subset n m :
+  Subset m (composable_pairs_step n m).
 Proof.
-  unfold composable_pairs.
-  rewrite N.peano_rect_succ; reflexivity.
-Qed.
+  revert m.
+  induction n using N.peano_ind.
+  - intros. red. intros.
+    simpl. assumption.
+  - intros. red. intros.
+    unfold composable_pairs_step.
+    rewrite N.peano_rect_succ.
+    rewrite N.sub_succ_l; try reflexivity.
+    rewrite N.sub_diag.
+    simpl.
+    admit.
+Admitted.
 
 Lemma composable_pairs_step_disjoint n m :
   P.Disjoint m (composable_pairs n) ->
