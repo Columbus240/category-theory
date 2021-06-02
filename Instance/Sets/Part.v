@@ -107,10 +107,13 @@ Next Obligation.
     exact None.
   - proper.
     destruct f, g; simpl in *.
-    spose (proper_morphism _ _ X) as X1.
+    match goal with
+    | H : _ ≈ _ |- _ =>
+      spose (proper_morphism _ _ H) as X1;
+      spose (proper_morphism0 _ _ H) as X2
+    end.
     destruct (morphism x0);
     destruct (morphism y0); try tauto;
-    spose (proper_morphism0 _ _ X) as X2;
     destruct (morphism0 x0);
     destruct (morphism0 y0); try tauto.
 Defined.
@@ -126,7 +129,8 @@ Next Obligation.
   - proper.
     destruct x0, y0; try tauto.
     destruct s, s0; try tauto.
-    destruct p, p0, X; auto.
+    repeat match goal with H : _ ∧ _ |- _ => destruct H end.
+    assumption.
 Defined.
 Next Obligation.
   unfold Part_Cartesian_obligation_1.
@@ -140,28 +144,44 @@ Next Obligation.
   - proper.
     destruct x0, y0; try tauto.
     destruct s, s0; try tauto.
-    destruct p, p0, X; auto.
+    repeat match goal with H : _ ∧ _ |- _ => destruct H end.
+    assumption.
 Defined.
 Next Obligation.
   proper.
-  specialize (X x2).
-  specialize (X0 x2).
+  repeat match goal with
+  | H : forall _ : ?T, _,
+    x : ?T |- _ =>
+    specialize (H x)
+  end.
   destruct (x0 x2), (x1 x2), (y0 x2), (y1 x2); auto.
 Qed.
 Next Obligation.
   split; intros.
   - split; intros.
-    + specialize (X x0).
+    + match goal with
+      | H : forall _ : ?T, _,
+        x : ?T |- _ =>
+        specialize (H x)
+      end.
       destruct (h x0), (f x0), (g x0); try tauto;
       destruct s; try tauto;
       destruct s; try tauto.
-      destruct p, X; auto.
-    + specialize (X x0).
+      repeat match goal with H : _ ∧ _ |- _ => destruct H end.
+      assumption.
+    + match goal with
+      | H : forall _ : ?T, _,
+        x : ?T |- _ =>
+        specialize (H x0)
+      end.
       destruct (h x0), (f x0), (g x0); try tauto;
       destruct s; try tauto;
       destruct s; try tauto.
-      destruct p, X; auto.
-  - destruct X.
+      repeat match goal with H : _ ∧ _ |- _ => destruct H end.
+      assumption.
+  - match goal with
+    | H : _ ∧ _ |- _ => destruct H
+    end.
     specialize (y0 x0).
     specialize (y1 x0).
     destruct (h x0), (f x0), (g x0); try tauto;
