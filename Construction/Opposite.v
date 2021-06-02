@@ -8,7 +8,7 @@ Set Primitive Projections.
 Set Universe Polymorphism.
 Unset Transparent Obligations.
 
-Reserved Notation "C ^op" (at level 7).
+Reserved Notation "C ^op" (at level 7, format "C ^op").
 
 Definition Opposite `(C : Category) : Category := {|
   obj     := @obj C;
