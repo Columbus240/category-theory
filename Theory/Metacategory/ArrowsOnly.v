@@ -311,7 +311,6 @@ Program Definition Zero  : Metacategory := {| pairs := composable_pairs 0 |}.
 Program Definition One   : Metacategory := {| pairs := composable_pairs 1 |}.
 Program Definition Two   : Metacategory := {| pairs := composable_pairs 2 |}.
 Program Definition Three : Metacategory := {| pairs := composable_pairs 3 |}.
-Program Definition Four  : Metacategory := {| pairs := composable_pairs 4 |}.
 
 Ltac elimobj X :=
   elimtype False;
