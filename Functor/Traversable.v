@@ -74,10 +74,21 @@ Program Instance Id_Traversable {C : Category}
 
 Require Import Category.Functor.Diagonal.
 
+Definition Diagonal_Traversable_sequence {C J : Category}
+        `{@Cartesian C} `{@Terminal C} `{@Closed C _} (x : C)
+        (G : C ⟶ C) (H2 : @Applicative C _ _ _ G) :
+        (Diagonal C x) ◯ G ⟹ G ◯ (Diagonal C x).
+Proof.
+  unshelve econstructor.
+  - intros. apply (pure[G]).
+  - cat_simpl.
+  - cat_simpl.
+Defined.
+
 Program Instance Diagonal_Traversable {C J : Category}
         `{@Cartesian C} `{@Terminal C} `{@Closed C _} (x : C) :
   Traversable (Diagonal C x) := {
-  sequence := fun G _ => {| transform := fun _ => pure[G] |}
+  sequence G H2 := Diagonal_Traversable_sequence x G H2
 }.
 Next Obligation.
   unfold pure.
