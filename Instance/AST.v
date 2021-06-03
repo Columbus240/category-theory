@@ -78,25 +78,29 @@ Program Fixpoint interp `(c : Hom a b) :
   | Merge f g   => merge (interp f) (interp g)
   end.
 
-Program Instance AST : Category := {
-  obj     := Obj;
-  hom     := Hom;
-  id      := @Id;
-  compose := @Compose;
-  homset  := fun _ _ =>
-    {| equiv := fun f g =>
+Program Definition Hom_interp_Setoid a b : Setoid (Hom a b) :=
+  {| equiv := fun f g =>
          forall {C : Category}
                 {A : @Cartesian C}
                 `{@Closed C A}
                 `{@Cocartesian C}
                 `{@Terminal C}
                 `{@Initial C},
-           interp f ≈ interp g |}
-}.
+           interp f ≈ interp g |}.
 Next Obligation.
-  equivalence.
-  transitivity (interp y); auto.
+  split; red; intros.
+  - reflexivity.
+  - symmetry. auto.
+  - transitivity (interp y); auto.
 Qed.
+
+Program Instance AST : Category := {
+  obj     := Obj;
+  hom     := Hom;
+  id      := @Id;
+  compose := @Compose;
+  homset  := Hom_interp_Setoid;
+}.
 
 Program Instance Hom_Terminal : @Terminal AST := {
   terminal_obj := One_;
