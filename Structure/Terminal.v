@@ -23,7 +23,7 @@ End Terminal.
 
 Notation "1" := terminal_obj : object_scope.
 
-Hint Resolve @one_unique : category_laws.
+Global Hint Resolve @one_unique : category_laws.
 
 Corollary one_comp `{@Terminal C} {x y : C} {f : x ~> y} :
   one ∘ f ≈ one.

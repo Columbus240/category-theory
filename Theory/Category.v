@@ -171,11 +171,11 @@ Ltac comp_right :=
   try rewrite !comp_assoc;
   apply compose_respects; [|reflexivity].
 
-Hint Extern 10 (?X ∘ ?Y ≈ ?Z ∘ ?Q) =>
+Global Hint Extern 10 (?X ∘ ?Y ≈ ?Z ∘ ?Q) =>
   apply compose_respects; auto : category_laws.
-Hint Extern 10 (?X ∘ (?Y ∘ ?Z) ≈ ?W) =>
+Global Hint Extern 10 (?X ∘ (?Y ∘ ?Z) ≈ ?W) =>
   rewrite <- comp_assoc; cat : category_laws.
-Hint Extern 10 ((?X ∘ ?Y) ∘ ?Z ≈ ?W) =>
+Global Hint Extern 10 ((?X ∘ ?Y) ∘ ?Z ≈ ?W) =>
   rewrite comp_assoc; cat : category_laws.
 
 Ltac rewrites :=

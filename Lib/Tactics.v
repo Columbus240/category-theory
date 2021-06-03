@@ -62,28 +62,28 @@ Ltac cat :=
   auto with category_laws;
   try reflexivity.
 
-Hint Constructors Equivalence : core.
+Global Hint Constructors Equivalence : core.
 
-Hint Unfold Reflexive : core.
-Hint Unfold Symmetric : core.
-Hint Unfold Transitive : core.
+Global Hint Unfold Reflexive : core.
+Global Hint Unfold Symmetric : core.
+Global Hint Unfold Transitive : core.
 
-Hint Extern 1 (Reflexive ?X) =>
+Global Hint Extern 1 (Reflexive ?X) =>
   unfold Reflexive; auto : core.
-Hint Extern 1 (Symmetric ?X) =>
+Global Hint Extern 1 (Symmetric ?X) =>
   unfold Symmetric; intros; auto : core.
-Hint Extern 1 (Transitive ?X) =>
+Global Hint Extern 1 (Transitive ?X) =>
   unfold Transitive; intros; auto : core.
-Hint Extern 1 (Equivalence ?X) =>
+Global Hint Extern 1 (Equivalence ?X) =>
   apply Build_Equivalence : core.
-Hint Extern 1 (Proper _ _) => unfold Proper; auto : core.
-Hint Extern 8 (respectful _ _ _ _) =>
+Global Hint Extern 1 (Proper _ _) => unfold Proper; auto : core.
+Global Hint Extern 8 (respectful _ _ _ _) =>
   unfold respectful; auto : core.
 
-Hint Extern 4 (equiv ?A ?A) => reflexivity : category_laws.
-Hint Extern 6 (equiv ?X ?Y) =>
+Global Hint Extern 4 (equiv ?A ?A) => reflexivity : category_laws.
+Global Hint Extern 6 (equiv ?X ?Y) =>
   apply Equivalence_Symmetric : category_laws.
-Hint Extern 7 (equiv ?X ?Z) =>
+Global Hint Extern 7 (equiv ?X ?Z) =>
   match goal with
     [H : equiv ?X ?Y, H' : equiv ?Y ?Z |- equiv ?X ?Z] => transitivity Y
   end : category_laws.
