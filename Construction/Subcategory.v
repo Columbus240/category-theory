@@ -82,3 +82,16 @@ Definition Replete : Type :=
 Definition Wide : Type := ∀ x : C, sobj S x.
 
 End Subcategory.
+
+Program Definition Build_FullSubcategory {C : Category} (P : C -> Type)
+  : Subcategory C :=
+  {| sobj := P;
+     shom _ _ _ _ _ := unit;
+  |}.
+
+Lemma Build_FullSubcategory_Full C P :
+  Full C (Build_FullSubcategory P).
+Proof.
+  red. intros.
+  refine tt.
+Qed.
