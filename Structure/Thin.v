@@ -14,6 +14,22 @@ Import EqNotations.
 Definition is_Thin (C : Category) :=
   forall x y (f g : x ~> y), f ≈ g.
 
+Require Import Category.Theory.Functor.
+Require Import Category.Instance.One.
+
+Lemma is_Thin_char (C : Category) :
+  is_Thin C ↔ forall `(F : C ⟶ D), Faithful F.
+Proof.
+  split; intros.
+  - constructor. intros.
+    apply X.
+  - red. intros.
+    specialize (X _ (Erase C)).
+    apply X.
+    simpl.
+    reflexivity.
+Qed.
+
 Require Import Category.Instance.Cat.
 Require Import Category.Theory.Isomorphism.
 
