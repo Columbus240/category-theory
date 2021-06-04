@@ -231,3 +231,22 @@ Next Obligation.
 Qed.
 
 Notation "f ⊙ g" := (@iso_compose _ _ _ _ f g) (at level 40, left associativity).
+
+(* A property is called [Invariant] if it is preserved by
+   isomorphisms. *)
+Definition Invariant {C : Category} (P : C -> Type) :=
+  Proper (Isomorphism ==> iffT) P.
+
+(* by symmetry, it suffices to prove only one direction of [iffT] in
+   the definition of [Invariant] *)
+Lemma Invariant_one_sided {C : Category} (P : C -> Type) :
+  Proper (Isomorphism ==> arrow) P -> Invariant P.
+Proof.
+  intros.
+  red in X.
+  proper.
+  - specialize (X x y X0).
+    apply X. assumption.
+  - specialize (X y x (iso_sym X0)).
+    apply X. assumption.
+Defined.
