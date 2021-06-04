@@ -4,7 +4,7 @@ This development encodes category theory in Coq, with the primary aim being to
 allow representation and manipulation of categorical terms, as well
 realization of those terms in various target categories.
 
-Versions used: [Coq](https://github.com/coq/coq/) 8.10.2.
+Compatible with [Coq](https://github.com/coq/coq/) version 8.10.2 and higher.
 Some incomplete parts depend on [Coq-Equations](https://github.com/mattam82/Coq-Equations).
 
 ## Usage
