@@ -249,4 +249,25 @@ Proof.
     apply X. assumption.
   - specialize (X y x (iso_sym X0)).
     apply X. assumption.
-Defined.
+Qed.
+
+(* If we have multiple equivalent formulations of a property and one
+   is invariant, then the other is as well. *)
+Lemma Invariant_Proper' (C : Category) (P0 P1 : C -> Type) :
+  (forall x : C, P0 x ↔ P1 x) ->
+  Invariant P0 -> Invariant P1.
+Proof.
+  intros.
+  apply Invariant_one_sided.
+  proper.
+  rewrite <- X in *.
+  apply (X0 x); assumption.
+Qed.
+
+Lemma Invariant_Proper (C : Category) (P0 P1 : C -> Type) :
+  (forall x : C, P0 x ↔ P1 x) ->
+  Invariant P0 ↔ Invariant P1.
+Proof.
+  intros; split; apply Invariant_Proper'; try assumption.
+  symmetry. apply X.
+Qed.
