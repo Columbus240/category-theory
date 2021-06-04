@@ -23,3 +23,13 @@ Import EqNotations.
 *)
 Definition is_Discrete (C : Category) :=
   is_Thin C ∧ is_Groupoid C.
+
+Lemma is_Discrete_invariant : Invariant is_Discrete.
+Proof.
+  apply Invariant_one_sided.
+  proper.
+  destruct X0.
+  split.
+  - apply (is_Thin_invariant x); assumption.
+  - apply (is_Groupoid_invariant x); assumption.
+Qed.

@@ -83,46 +83,7 @@ Proof.
     + simpl. cat.
   - intros.
     destruct X as [X [S ?]].
-    destruct (Discrete_is_Discrete S).
-    destruct i; simpl in to, from.
-    assert (is_Thin C).
-    { red; intros.
-      pose (fmap[to] f).
-      pose (fmap[to] g).
-      specialize (i0 _ _ h h0).
-      unfold h, h0 in i0.
-      pose (fmap[from] h).
-      pose (fmap[from] h0).
-      assert (h1 ≈ h2).
-      { unfold h1, h2, h, h0.
-        rewrite i0. reflexivity.
-      }
-      simpl in *.
-      destruct iso_from_to.
-      unfold h1, h2, h, h0 in H.
-      clear h1 h2 h h0.
-      rewrite e in H.
-      rewrite e in H.
-      apply (iso_from_monic (x0 y)).
-      apply (iso_to_epic (x0 x)).
-      assumption.
-    }
-    split.
-    { assumption. }
-    red; intros.
-    specialize (i1 _ _ (fmap[to] f)) as [iso].
-    pose (fmap_iso from _ _ iso).
-    destruct iso_from_to.
-    unshelve eexists.
-    + unshelve eexists.
-      * apply f.
-      * simpl in x0, e0.
-        pose proof (x0 x).
-        pose proof (x0 y).
-        unshelve eapply (_ ∘ (Isomorphism.from i) ∘ _).
-        -- apply X1.
-        -- apply X2.
-      * simpl. apply X0.
-      * simpl. apply X0.
-    + simpl. reflexivity.
+    pose proof (Discrete_is_Discrete S).
+    apply (is_Discrete_invariant (Discrete S)); try assumption.
+    symmetry; assumption.
 Defined.
