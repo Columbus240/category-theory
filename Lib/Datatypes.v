@@ -303,3 +303,24 @@ Next Obligation.
 Qed.
 
 Arguments fun_setoid A B {_}.
+
+(* The setoid where [equiv := eq], so distinct objects are not equivalent. *)
+Program Definition eq_setoid (X : Type) : Setoid X :=
+  {| equiv := eq |}.
+
+(* The setoid where [equiv := unit], so all objects are equivalent. *)
+Program Definition full_setoid (X : Type) : Setoid X :=
+  {| equiv x y := unit |}.
+
+Global Program Instance full_setoid_respects {A B} `{Setoid A} (f : A -> B) :
+  Proper (equiv ==> @equiv B (full_setoid B)) f.
+
+Program Definition iffT_setoid : Setoid Type := {| equiv := iffT; |}.
+Next Obligation.
+  split; try exact iffT_Reflexive; try exact iffT_Symmetric;
+    try exact iffT_Transitive.
+Qed.
+
+(* Restrict a setoid to a subtype. *)
+Program Definition sigT_setoid {X : Type} (S : Setoid X) (P : X -> Type) : Setoid { x : X & P x } :=
+  {| equiv x y := @equiv X S (projT1 x) (projT1 y); |}.
