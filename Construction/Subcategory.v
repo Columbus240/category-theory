@@ -81,6 +81,23 @@ Definition Replete : Type :=
 
 Definition Wide : Type := ∀ x : C, sobj S x.
 
+(* Properties which are invariant in [C] are also invariant in [S]. *)
+Lemma Subcategory_Invariant (P : C -> Type) :
+  Invariant P -> Invariant (fun x : obj[Sub] => P (`1 x)).
+Proof.
+  intros.
+  apply Invariant_one_sided.
+  proper.
+  destruct x, y.
+  simpl in *.
+  specialize (X x x0).
+  apply X; try assumption.
+  destruct X0.
+  simpl in *.
+  destruct to as [to], from as [from].
+  exists to from; assumption.
+Qed.
+
 End Subcategory.
 
 Program Definition Build_FullSubcategory {C : Category} (P : C -> Type)
