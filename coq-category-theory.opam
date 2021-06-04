@@ -20,6 +20,8 @@ depends: [
 ]
 
 tags: [
+  "logpath:Category"
+  "category:Math/Category Theory"
 ]
 authors: [
   "John Wiegley"
