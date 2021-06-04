@@ -112,18 +112,18 @@ Qed.
    are products and sums, so we must show how they interact with constructive
    setoids. *)
 
-Program Instance prod_setoid {A B} `{Setoid A} `{Setoid B} :
+Global Program Instance prod_setoid {A B} `{Setoid A} `{Setoid B} :
   Setoid (A * B) := {
   equiv := fun x y => equiv (fst x) (fst y) * equiv (snd x) (snd y)
 }.
 
-Program Instance pair_respects {A B} `{Setoid A} `{Setoid B} :
+Global Program Instance pair_respects {A B} `{Setoid A} `{Setoid B} :
   Proper (equiv ==> equiv ==> equiv) (@pair A B).
 
-Program Instance fst_respects {A B} `{Setoid A} `{Setoid B} :
+Global Program Instance fst_respects {A B} `{Setoid A} `{Setoid B} :
   Proper (equiv ==> equiv) (@fst A B).
 
-Program Instance snd_respects {A B} `{Setoid A} `{Setoid B} :
+Global Program Instance snd_respects {A B} `{Setoid A} `{Setoid B} :
   Proper (equiv ==> equiv) (@snd A B).
 
 Corollary let_fst {x y} (A : x * y) `(f : x -> z) :
@@ -142,7 +142,7 @@ Corollary let_projT2 {A P} (S : @sigT A P) `(f : forall x, P x -> z) :
   (let (x, y) := S in f x y) = f (projT1 S) (projT2 S).
 Proof. destruct S; auto. Qed.
 
-Program Instance sum_setoid {A B} `{Setoid A} `{Setoid B} :
+Global Program Instance sum_setoid {A B} `{Setoid A} `{Setoid B} :
   Setoid (A + B) := {
   equiv := fun x y =>
     match x with
@@ -162,13 +162,13 @@ Next Obligation.
   equivalence; destruct x, y; try destruct z; intuition.
 Qed.
 
-Program Instance inl_respects {A B} `{Setoid A} `{Setoid B} :
+Global Program Instance inl_respects {A B} `{Setoid A} `{Setoid B} :
   Proper (equiv ==> equiv) (@inl A B).
 
-Program Instance inr_respects {A B} `{Setoid A} `{Setoid B} :
+Global Program Instance inr_respects {A B} `{Setoid A} `{Setoid B} :
   Proper (equiv ==> equiv) (@inr A B).
 
-Polymorphic Program Instance option_setoid `{Setoid A} : Setoid (option A) := {
+Global Polymorphic Program Instance option_setoid `{Setoid A} : Setoid (option A) := {
   equiv := fun x y => match x, y with
     | Some x, Some y => x ≈ y
     | None, None => True
@@ -187,7 +187,7 @@ Next Obligation.
     contradiction.
 Qed.
 
-Program Instance Some_respects {A} `{Setoid A} :
+Global Program Instance Some_respects {A} `{Setoid A} :
   Proper (equiv ==> equiv) (@Some A).
 
 Fixpoint list_equiv `{Setoid A} (xs ys : list A) : Type :=
@@ -197,7 +197,7 @@ Fixpoint list_equiv `{Setoid A} (xs ys : list A) : Type :=
   | _, _ => False
   end.
 
-Program Instance list_equivalence `{Setoid A} : Equivalence list_equiv.
+Global Program Instance list_equivalence `{Setoid A} : Equivalence list_equiv.
 Next Obligation.
   induction x; simpl; simplify; auto.
   reflexivity.
@@ -213,14 +213,14 @@ Next Obligation.
   - firstorder.
 Qed.
 
-Polymorphic Program Instance list_setoid `{Setoid A} : Setoid (list A) := {
+Global Polymorphic Program Instance list_setoid `{Setoid A} : Setoid (list A) := {
   equiv := list_equiv
 }.
 
-Program Instance cons_respects {A} `{Setoid A} :
+Global Program Instance cons_respects {A} `{Setoid A} :
   Proper (equiv ==> equiv ==> equiv) (@cons A).
 
-Program Instance app_respects {A} `{Setoid A} :
+Global Program Instance app_respects {A} `{Setoid A} :
   Proper (equiv ==> equiv ==> equiv) (@app A).
 Next Obligation.
   proper.
@@ -292,9 +292,9 @@ Proof.
   induction l2; auto.
 Qed.
 
-Program Instance nat_setoid : Setoid nat.
+Global Program Instance nat_setoid : Setoid nat.
 
-Program Instance fun_setoid {A : Type} `{Setoid B} : Setoid (A -> B) := {
+Global Program Instance fun_setoid {A : Type} `{Setoid B} : Setoid (A -> B) := {
   equiv := fun f g => ∀ x, f x ≈ g x
 }.
 Next Obligation.

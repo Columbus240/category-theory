@@ -47,15 +47,15 @@ Class Setoid A := {
 
 Notation "f ≈ g" := (equiv f g) (at level 79) : category_theory_scope.
 
-Program Instance setoid_refl `(sa : Setoid A) :
+Global Program Instance setoid_refl `(sa : Setoid A) :
   Reflexive equiv.
 Obligation 1. apply setoid_equiv. Qed.
 
-Program Instance setoid_sym `(sa : Setoid A) :
+Global Program Instance setoid_sym `(sa : Setoid A) :
   Symmetric equiv.
 Obligation 1. apply setoid_equiv; auto. Qed.
 
-Program Instance setoid_trans `(sa : Setoid A) :
+Global Program Instance setoid_trans `(sa : Setoid A) :
   Transitive equiv.
 Obligation 1.
   apply setoid_equiv.
