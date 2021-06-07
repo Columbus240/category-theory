@@ -24,7 +24,7 @@ Notation "C ̸ c" := (@Slice C c) (at level 90) : category_scope.
 (* Although the encoding of Slice above is more convenient, theoretically it's
    the comma category (Id[C] ↓ Const c). *)
 
-Program Instance Comma_Slice `(C : Category) `(c : C) :
+Global Program Instance Comma_Slice `(C : Category) `(c : C) :
   C ̸ c ≅[Cat] (Id ↓ Const c) := {
   to   := {| fobj := _; fmap := _ |};
   from := {| fobj := _; fmap := _ |}
@@ -48,7 +48,7 @@ Next Obligation. rewrite <- comp_assoc; rewrites; reflexivity. Defined.
 
 Notation "c ̸co C" := (@Coslice C c) (at level 90) : category_scope.
 
-Program Instance Comma_Coslice `(C : Category) `(c : C) :
+Global Program Instance Comma_Coslice `(C : Category) `(c : C) :
   c ̸co C ≅[Cat] (Const c ↓ Id) := {
   to   := {| fobj := _; fmap := _ |};
   from := {| fobj := _; fmap := _ |}

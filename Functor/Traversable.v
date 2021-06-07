@@ -28,13 +28,13 @@ Context {F : C ⟶ C}.
 
 Local Obligation Tactic := idtac.
 
-Program Instance Id_Applicative : @Applicative C _ _ _ (Id[C]) := {
+Global Program Instance Id_Applicative : @Applicative C _ _ _ (Id[C]) := {
   is_strong := Id_StrongFunctor;
   is_lax_monoidal := @Id_LaxMonoidalFunctor C InternalProduct_Monoidal
                                             C InternalProduct_Monoidal
 }.
 
-Program Instance Compose_Applicative
+Global Program Instance Compose_Applicative
         {G : C ⟶ C} `{@Applicative C _ _ _ G}
         {H : C ⟶ C} `{@Applicative C _ _ _ H} :
   @Applicative C _ _ _ (Compose G H) := {
@@ -66,7 +66,7 @@ End Traversable.
 
 Arguments Traversable {_ _ _ _} F.
 
-Program Instance Id_Traversable {C : Category}
+Global Program Instance Id_Traversable {C : Category}
         `{@Cartesian C} `{@Terminal C} `{@Closed C _} (x : C) :
   Traversable (@Id C) := {
   sequence := fun _ _ => {| transform := fun _ => id |}
@@ -85,7 +85,7 @@ Proof.
   - cat_simpl.
 Defined.
 
-Program Instance Diagonal_Traversable {C J : Category}
+Global Program Instance Diagonal_Traversable {C J : Category}
         `{@Cartesian C} `{@Terminal C} `{@Closed C _} (x : C) :
   Traversable (Diagonal C x) := {
   sequence G H2 := Diagonal_Traversable_sequence x G H2

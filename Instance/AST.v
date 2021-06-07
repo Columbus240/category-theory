@@ -94,7 +94,7 @@ Next Obligation.
   - transitivity (interp y); auto.
 Qed.
 
-Program Instance AST : Category := {
+Global Program Instance AST : Category := {
   obj     := Obj;
   hom     := Hom;
   id      := @Id;
@@ -102,12 +102,12 @@ Program Instance AST : Category := {
   homset  := Hom_interp_Setoid;
 }.
 
-Program Instance Hom_Terminal : @Terminal AST := {
+Global Program Instance Hom_Terminal : @Terminal AST := {
   terminal_obj := One_;
   one := @One'
 }.
 
-Program Instance Hom_Cartesian : @Cartesian AST := {
+Global Program Instance Hom_Cartesian : @Cartesian AST := {
   product_obj := Prod_;
   fork := @Fork;
   exl  := @Exl;
@@ -123,7 +123,7 @@ Next Obligation.
   rewrite fork_comp; cat.
 Qed.
 
-Program Instance Hom_Closed : @Closed AST _ := {
+Global Program Instance Hom_Closed : @Closed AST _ := {
   exponent_obj := Exp_;
   exp_iso := fun x y z =>
     {| to   := {| morphism := @Curry x y z |}
@@ -132,12 +132,12 @@ Program Instance Hom_Closed : @Closed AST _ := {
 Next Obligation. proper; rewrite X; reflexivity. Qed.
 Next Obligation. proper; rewrite X; reflexivity. Qed.
 
-Program Instance Hom_Initial : @Initial AST := {
+Global Program Instance Hom_Initial : @Initial AST := {
   terminal_obj := Zero_;
   one := @Zero'
 }.
 
-Program Instance Hom_Cocartesian : @Cocartesian AST := {
+Global Program Instance Hom_Cocartesian : @Cocartesian AST := {
   product_obj := Coprod_;
   fork := @Merge;
   exl  := @Inl;
@@ -153,7 +153,7 @@ Next Obligation.
   rewrite merge_comp; cat.
 Qed.
 
-Program Instance interp_proper {x y : Obj}
+Global Program Instance interp_proper {x y : Obj}
         {C : Category} {A : @Cartesian C}
         `{@Closed C A} `{@Cocartesian C}
         `{@Terminal C} `{@Initial C} :
