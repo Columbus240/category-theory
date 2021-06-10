@@ -21,7 +21,7 @@ Record SetoidMorphism `{Setoid x} `{Setoid y} := {
 Arguments SetoidMorphism {_} _ {_} _.
 Arguments morphism {_ _ _ _ _} _.
 
-Program Instance SetoidMorphism_Setoid {x y : SetoidObject} :
+Global Program Instance SetoidMorphism_Setoid {x y : SetoidObject} :
   Setoid (SetoidMorphism x y) := {|
   equiv := fun f g => forall x, @equiv _ y (f x) (g x)
 |}.
@@ -86,7 +86,7 @@ Require Import Category.Theory.Isomorphism.
 Notation "x ≊ y" := ({| carrier := x |} ≅[Sets] {| carrier := y |})
   (at level 99) : category_scope.
 
-Program Instance isomorphism_to_sets_respects
+Global Program Instance isomorphism_to_sets_respects
         `{Setoid x} `{Setoid y}
         (iso : @Isomorphism Sets {| carrier := x |} {| carrier := y |}) :
   Proper (equiv ==> equiv) (to iso).
@@ -97,7 +97,7 @@ Next Obligation.
   rewrite X; reflexivity.
 Qed.
 
-Program Instance isomorphism_from_sets_respects
+Global Program Instance isomorphism_from_sets_respects
         `{Setoid x} `{Setoid y}
         (iso : @Isomorphism Sets {| carrier := x |} {| carrier := y |}) :
   Proper (equiv ==> equiv) (from iso).
@@ -113,11 +113,11 @@ Ltac morphism :=
 
 Require Import Category.Structure.Terminal.
 
-Program Instance Unit_Setoid : Setoid (unit : Type) := {
+Global Program Instance Unit_Setoid : Setoid (unit : Type) := {
   equiv := fun x y => x = y
 }.
 
-Program Instance Sets_Terminal : @Terminal Sets := {
+Global Program Instance Sets_Terminal : @Terminal Sets := {
   terminal_obj := {| carrier := unit : Type |};
   one := fun _ => {| morphism := fun _ => tt |};
   one_unique := fun x f g => _
@@ -126,9 +126,9 @@ Next Obligation. destruct (f x0), (g x0); reflexivity. Qed.
 
 Require Import Category.Structure.Initial.
 
-Program Instance False_Setoid : Setoid False.
+Global Program Instance False_Setoid : Setoid False.
 
-Program Instance Sets_Initial : @Initial Sets := {
+Global Program Instance Sets_Initial : @Initial Sets := {
   terminal_obj := {| carrier := False |};
   one := _
 }.
@@ -137,7 +137,7 @@ Next Obligation. contradiction. Qed.
 
 Require Import Category.Structure.Monoidal.
 
-Program Instance Sets_Product_Monoidal : @Monoidal Sets := {
+Global Program Instance Sets_Product_Monoidal : @Monoidal Sets := {
   I      := {| carrier := unit : Type |};
   tensor := {|
     fobj := fun p =>
