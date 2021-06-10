@@ -215,3 +215,78 @@ Next Obligation.
   - simpl.
     simplify; simpl; cat.
 Defined.
+
+Program Definition Powerset (A : SetoidObject) : SetoidObject :=
+  {| carrier := SetoidMorphism A iffT_setoid;
+     is_setoid :=
+       {| equiv U V :=
+            forall a : A, U a ↔ V a; |};
+  |}.
+Next Obligation.
+  equivalence; simpl in *.
+  - rewrite X. assumption.
+  - rewrite <- X. assumption.
+  - rewrite <- X0, <- X. assumption.
+  - rewrite X, X0. assumption.
+Qed.
+
+(* covariant powerset functor. For [f : A -> B] it maps each [X ⊆ A] to
+   its image [f[X] ⊆ B]. *)
+Program Definition CovPowerset : Sets ⟶ Sets :=
+  {| fobj A := Powerset A;
+     fmap A B f :=
+       {| morphism U :=
+            {| morphism y := ∃ x : A, @equiv B B (f x) y ∧ (U x) |}
+        |}
+  |}.
+Next Obligation.
+  proper. transitivity y; [assumption| symmetry; assumption].
+Qed.
+Next Obligation.
+  proper.
+  - rewrite <- X. assumption.
+  - rewrite X. assumption.
+Qed.
+Next Obligation.
+  proper; simpl in *.
+  - rewrite <- X. assumption.
+  - rewrite X. assumption.
+Qed.
+Next Obligation.
+  split.
+  - intros. destruct X as [? []].
+    destruct x0. simpl in *.
+    rewrite <- e. assumption.
+  - intros. exists a; split; [reflexivity|assumption].
+Qed.
+Next Obligation.
+  split.
+  - intros [? []].
+    exists (g x1). split; [assumption|].
+    exists x1. split; [reflexivity|assumption].
+  - intros [? [? [? []]]].
+    exists x2; split; [|assumption].
+    rewrite <- e.
+    apply f. assumption.
+Qed.
+
+(* contravariant powerset functor. For [f : B -> A] it maps each
+   [X ⊆ B] to its preimage [f¯¹[X] ⊆ A] *)
+Program Definition ContravPowerset : Sets^op ⟶ Sets :=
+  {| fobj A := Powerset A;
+     fmap B A f :=
+       {| morphism U :=
+            {| morphism x := U (f x) |}
+       |};
+  |}.
+Next Obligation.
+  red; red; intros.
+  apply U. apply f. assumption.
+Qed.
+Next Obligation.
+  red; red; intros. apply X.
+Qed.
+Next Obligation.
+  red; red; intros.
+  simpl. apply x1. apply X.
+Qed.
