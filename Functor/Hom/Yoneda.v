@@ -38,7 +38,7 @@ Unset Transparent Obligations.
    easier, which become more difficult when restricted to the fully abstract
    nature of `C`. *)
 
-Program Instance Yoneda_Lemma `(C : Category) `(F : C^op ⟶ Sets) :
+Global Program Instance Yoneda_Lemma `(C : Category) `(F : C^op ⟶ Sets) :
   ∀ A : C, Presheaves [Hom ─,A] F ≅ F A := {
   to   := {| morphism := fun x => transform[x] A id |};
   from := {| morphism := fun y : F A =>
@@ -86,7 +86,7 @@ Next Obligation.
   apply transform; cat.
 Qed.
 
-Program Instance Covariant_Yoneda_Lemma `(C : Category) `(F : C ⟶ Sets) :
+Global Program Instance Covariant_Yoneda_Lemma `(C : Category) `(F : C ⟶ Sets) :
   ∀ A : C, Copresheaves [Hom A,─] F ≅ F A := {
   to   := {| morphism := fun x => transform[x] A id |};
   from := {| morphism := fun y : F A =>
@@ -134,7 +134,7 @@ Next Obligation.
   apply transform; cat.
 Qed.
 
-Program Instance Yoneda_Embedding `(C : Category) :
+Global Program Instance Yoneda_Embedding `(C : Category) :
   ∀ A B : C, Presheaves [Hom ─,A] [Hom ─,B] ≊ A ~> B.
 Next Obligation. morphism. Defined.
 Next Obligation.
@@ -156,7 +156,7 @@ Next Obligation.
   apply proper_morphism; cat.
 Qed.
 
-Program Instance Covariant_Yoneda_Embedding `(C : Category) :
+Global Program Instance Covariant_Yoneda_Embedding `(C : Category) :
   ∀ A B : C, Copresheaves [Hom B,─] [Hom A,─] ≊ A ~> B.
 Next Obligation. morphism. Defined.
 Next Obligation.

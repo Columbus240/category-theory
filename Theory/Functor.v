@@ -63,7 +63,7 @@ Notation "fmap[ F ]" := (@fmap _ _ F%functor _ _)
 
 Hint Rewrite @fmap_id : categories.
 
-Program Instance Functor_Setoid {C D : Category} : Setoid (C ⟶ D) := {
+Global Program Instance Functor_Setoid {C D : Category} : Setoid (C ⟶ D) := {
   equiv := fun F G =>
     (* Equality of objects in a category is taken to be isomorphism *)
     { iso : ∀ x : C, F x ≅ G x
@@ -111,7 +111,7 @@ Ltac constructive :=
                      | exists iso; intros ]
   end.
 
-Program Instance fmap_iso `(F : C ⟶ D) :
+Global Program Instance fmap_iso `(F : C ⟶ D) :
   Proper (Isomorphism ==> Isomorphism) F.
 Next Obligation.
   proper.
@@ -123,7 +123,7 @@ Next Obligation.
   rewrite iso_from_to; cat.
 Defined.
 
-Instance fobj_respects `(F : C ⟶ D) :
+Global Instance fobj_respects `(F : C ⟶ D) :
   Proper (equiv ==> equiv) (@fobj C D F) := @fmap_iso C D F.
 
 Ltac functor := unshelve (refine {| fobj := _; fmap := _ |}; simpl; intros).
@@ -151,7 +151,7 @@ Global Hint Unfold Compose : core.
 Notation "F ◯ G" := (Compose F%functor G%functor)
   (at level 40, left associativity) : category_scope.
 
-Program Instance Compose_respects {C D E : Category} :
+Global Program Instance Compose_respects {C D E : Category} :
   Proper (equiv ==> equiv ==> equiv) (@Compose C D E).
 Next Obligation.
   proper.

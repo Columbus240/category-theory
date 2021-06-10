@@ -9,7 +9,7 @@ Set Primitive Projections.
 Set Universe Polymorphism.
 Unset Transparent Obligations.
 
-Program Instance Sets_Cartesian : @Cartesian Sets := {
+Global Program Instance Sets_Cartesian : @Cartesian Sets := {
   product_obj := fun x y =>
     {| carrier := (carrier x * carrier y)%type
      ; is_setoid :=

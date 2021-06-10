@@ -9,7 +9,7 @@ Generalizable All Variables.
 Set Primitive Projections.
 Set Universe Polymorphism.
 
-Program Instance Diagonal {C : Category} (J : Category) : C ⟶ [J, C] := {
+Global Program Instance Diagonal {C : Category} (J : Category) : C ⟶ [J, C] := {
   fobj := fun x =>
     {| fobj := fun _ => x
      ; fmap := fun _ _ _ => id[x] |};
@@ -17,14 +17,14 @@ Program Instance Diagonal {C : Category} (J : Category) : C ⟶ [J, C] := {
     {| transform := fun _ => f |}
 }.
 
-Program Instance Diagonal_Product `(C : Category) : C ⟶ C ∏ C.
+Global Program Instance Diagonal_Product `(C : Category) : C ⟶ C ∏ C.
 
 Notation "Δ( C )" := (@Diagonal_Product C)
   (at level 90, format "Δ( C )") : functor_scope.
 
 Require Export Category.Instance.One.
 
-Program Instance Const {C : Category} (c : C) : 1 ⟶ C := Diagonal 1 c.
+Global Program Instance Const {C : Category} (c : C) : 1 ⟶ C := Diagonal 1 c.
 
 Notation "=( c )" := (Const c) (at level 90, format "=( c )") : functor_scope.
 
@@ -58,7 +58,7 @@ Proof.
   reflexivity.
 Qed.
 
-Instance Transform_Const {C : Category} `(x ~{C}~> y) : =(x) ⟹ =(y).
+Global Instance Transform_Const {C : Category} `(x ~{C}~> y) : =(x) ⟹ =(y).
 Proof.
   unshelve econstructor; intros; [assumption|cat|cat].
 Qed.
@@ -79,7 +79,7 @@ Obligation 2.
   crush. clear.
 Abort.
 
-Program Instance Sets_Const_Lim_Iso (J : Category) (a : Sets) (F : [J, Sets])
+Global Program Instance Sets_Const_Lim_Iso (J : Category) (a : Sets) (F : [J, Sets])
   : @Isomorphism Sets (Const a ⟾ F) (a → Lim_Sets J F).
 Obligation 1.
   destruct F. simpl.
@@ -116,7 +116,7 @@ Obligation 4.
   reflexivity.
 Qed.
 
-Program Instance Sets_Complete : Complete Sets.
+Global Program Instance Sets_Complete : Complete Sets.
 Obligation 1.
   exists (Lim_Sets J).
   apply Build_Adjunction.

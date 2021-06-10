@@ -11,7 +11,7 @@ Set Primitive Projections.
 Set Universe Polymorphism.
 Unset Transparent Obligations.
 
-Program Instance Sets_Cocartesian : @Cocartesian Sets := {
+Global Program Instance Sets_Cocartesian : @Cocartesian Sets := {
   product_obj := fun x y =>
     {| carrier := (carrier x + carrier y)%type
      ; is_setoid :=

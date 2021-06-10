@@ -132,7 +132,7 @@ Class NumericalFunctor := {
 
 End NumericalFunctor.
 
-Instance Coq_Numerical : @Numerical Coq Coq_Cartesian := {
+Global Instance Coq_Numerical : @Numerical Coq Coq_Cartesian := {
   numerical_obj := nat;
   add := prod_curry Nat.add
 }.

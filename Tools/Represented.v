@@ -19,7 +19,7 @@ Class Repr (A : Type) := {
 Arguments Repr A : clear implicits.
 Arguments repr A {_}.
 
-Program Instance prod_Repr
+Global Program Instance prod_Repr
         `{HA : @Repr A}
         `{HB : @Repr B} :
   Repr (@Datatypes.prod A B) := {
@@ -27,17 +27,17 @@ Program Instance prod_Repr
   convert := fun p => convert (fst p) △ convert (snd p)
 }.
 
-Program Instance unit_Repr : Repr (unit : Type) := {
+Global Program Instance unit_Repr : Repr (unit : Type) := {
   repr := One_;
   convert := fun _ => one
 }.
 
-Program Instance false_Repr : Repr False := {
+Global Program Instance false_Repr : Repr False := {
   repr := Zero_;
   convert := fun _ => False_rect _ _
 }.
 
-Program Instance bool_Repr : Repr bool := {
+Global Program Instance bool_Repr : Repr bool := {
   repr := Coprod_ One_ One_;
   convert := fun b => if b then inl else inr
 }.

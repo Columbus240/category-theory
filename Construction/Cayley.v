@@ -17,7 +17,7 @@ Context {C : Category}.
 
 (* Given any category, the Cayley representation forces all associations to
    the left. *)
-Program Instance Cayley : Category := {
+Global Program Instance Cayley : Category := {
   obj     := C;
   hom     := fun x y =>
     { f : ∀ r, (y ~> r) -> (x ~> r)
@@ -59,7 +59,7 @@ Next Obligation.
   apply X0.
 Qed.
 
-Program Instance To_Cayley : C ⟶ Cayley := {
+Global Program Instance To_Cayley : C ⟶ Cayley := {
   fobj := fun x => x;
   fmap := fun _ _ f => (fun _ k => k ∘ f; _);
 }.
@@ -68,7 +68,7 @@ Next Obligation.
   proper.
 Defined.
 
-Program Instance From_Cayley : Cayley ⟶ C := {
+Global Program Instance From_Cayley : Cayley ⟶ C := {
   fobj := fun x => x;
   fmap := fun x y f => `1 f y (@id C y);
 }.
@@ -102,7 +102,7 @@ Proof.
   reflexivity.
 Qed.
 
-Program Instance Cayley_Cartesian `{CA : @Cartesian C} : @Cartesian Cayley := {
+Global Program Instance Cayley_Cartesian `{CA : @Cartesian C} : @Cartesian Cayley := {
   product_obj := @product_obj C CA;
   fork := fun x y z f g =>
     let f' := to (Covariant_Yoneda_Embedding C x y) (_ f) in
@@ -217,8 +217,8 @@ End Cayley.
 
 Require Import Category.Functor.Structure.Cartesian.
 
-Program Instance To_Cayley_CartesianFunctor `{@Cartesian C} :
+Global Program Instance To_Cayley_CartesianFunctor `{@Cartesian C} :
   @CartesianFunctor _ _ To_Cayley _ Cayley_Cartesian.
 
-Program Instance From_Cayley_CartesianFunctor `{@Cartesian C} :
+Global Program Instance From_Cayley_CartesianFunctor `{@Cartesian C} :
   @CartesianFunctor _ _ From_Cayley Cayley_Cartesian _.

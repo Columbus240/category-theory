@@ -22,12 +22,12 @@ Ltac prove_naturality H tac :=
   split; simpl;
   intros; tac; intuition.
 
-Program Instance Identity_Naturality {C : Category} :
+Global Program Instance Identity_Naturality {C : Category} :
   Naturality (∀ A, A ~> A) := {
   natural := fun f => ∀ x y (g : x ~> y), g ∘ f x ≈ f y ∘ g
 }.
 
-Program Instance Functor_Naturality
+Global Program Instance Functor_Naturality
         {C : Category} {D : Category} (F G : C ⟶ D) :
   Naturality (∀ A, F A ~> G A) := {
   natural := fun f =>
@@ -37,7 +37,7 @@ Program Instance Functor_Naturality
 (*
 Require Import Category.Functor.Constant.
 
-Program Instance ConstMap {C : Category} {B : C} :
+Global Program Instance ConstMap {C : Category} {B : C} :
   EndoFunctor (λ _, B) | 9 := {
   map := fun _ _ _ => id;
   is_functor := Constant _ B
@@ -45,7 +45,7 @@ Program Instance ConstMap {C : Category} {B : C} :
 *)
 
 (*
-Program Instance PartialApply_Product_Left {F : C × C ⟶ C} {x : C} : C ⟶ C := {
+Global Program Instance PartialApply_Product_Left {F : C × C ⟶ C} {x : C} : C ⟶ C := {
   fobj := fun y => F (x, y);
   fmap := fun _ _ f => fmap[F] (id[x], f)
 }.
@@ -59,13 +59,13 @@ Next Obligation.
   reflexivity.
 Qed.
 
-Program Instance PartialApply_Curried_Left {F : C ⟶ [C, C]} {x : C} : C ⟶ C := {
+Global Program Instance PartialApply_Curried_Left {F : C ⟶ [C, C]} {x : C} : C ⟶ C := {
   fobj := fun y => F x y;
   fmap := fun _ _ f => fmap[F x] f
 }.
 Next Obligation. apply fmap_comp. Qed.
 
-Program Instance PartialApply_Product_Right {F : C × C ⟶ C} {y : C} : C ⟶ C := {
+Global Program Instance PartialApply_Product_Right {F : C × C ⟶ C} {y : C} : C ⟶ C := {
   fobj := fun x => F (x, y);
   fmap := fun _ _ f => fmap[F] (f, id[y])
 }.
@@ -79,7 +79,7 @@ Next Obligation.
   reflexivity.
 Qed.
 
-Program Instance PartialApply_Curried_Right {F : C ⟶ [C, C]} {y : C} : C ⟶ C := {
+Global Program Instance PartialApply_Curried_Right {F : C ⟶ [C, C]} {y : C} : C ⟶ C := {
   fobj := fun x => F x y;
   fmap := fun _ _ f => fmap[F] f y
 }.
@@ -98,14 +98,14 @@ Next Obligation.
 Qed.
 *)
 
-Program Instance ArityOne {C : Category}
+Global Program Instance ArityOne {C : Category}
         (P : C -> C) {F : @EndoFunctor C P}
         (Q : C -> C) {G : @EndoFunctor C Q} :
   @Naturality (∀ A, P A ~> Q A) := {
   natural := fun f => ∀ x y (g : x ~> y), @map _ _ G _ _ g ∘ f x ≈ f y ∘ @map _ _ F _ _ g
 }.
 
-Program Instance ArityTwo {C : Category}
+Global Program Instance ArityTwo {C : Category}
         (P : C -> C -> C)
             {FA : ∀ B, @EndoFunctor C (fun A => P A B)}
             {FB : ∀ A, @EndoFunctor C (fun B => P A B)}
@@ -118,7 +118,7 @@ Program Instance ArityTwo {C : Category}
       ≈ f y w ∘ @map _ _ (FB _) _ _ h ∘ @map _ _ (FA _) _ _ g
 }.
 
-Program Instance ArityThree {C : Category}
+Global Program Instance ArityThree {C : Category}
         (P : C -> C -> C -> C)
             {FA : ∀ B D : C, @EndoFunctor C (fun A => P A B D)}
             {FB : ∀ A D : C, @EndoFunctor C (fun B => P A B D)}
@@ -141,7 +141,7 @@ Program Instance ArityThree {C : Category}
       ∘ @map _ _ (FA _ _) _ _ g
 }.
 
-Program Instance ArityFour {C : Category}
+Global Program Instance ArityFour {C : Category}
         (P : C -> C -> C -> C -> C)
             {FA : ∀ B D E : C, @EndoFunctor C (fun A => P A B D E)}
             {FB : ∀ A D E : C, @EndoFunctor C (fun B => P A B D E)}
@@ -170,7 +170,7 @@ Program Instance ArityFour {C : Category}
 }.
 
 
-Program Instance ArityFive {C : Category}
+Global Program Instance ArityFive {C : Category}
         (P : C -> C -> C -> C -> C -> C)
             {FA : ∀ B D E F : C, @EndoFunctor C (fun A => P A B D E F)}
             {FB : ∀ A D E F : C, @EndoFunctor C (fun B => P A B D E F)}
@@ -203,7 +203,7 @@ Program Instance ArityFive {C : Category}
       ∘ @map _ _ (FA _ _ _ _) _ _ g
 }.
 
-Program Instance Transform_ArityOne {C : Category}
+Global Program Instance Transform_ArityOne {C : Category}
         (P : C -> C) `{@EndoFunctor C P}
         (Q : C -> C) `{@EndoFunctor C Q} :
   @Naturality (∀ A, P A ≅ Q A) := {
@@ -211,7 +211,7 @@ Program Instance Transform_ArityOne {C : Category}
                       natural (fun A => from (f A))
 }.
 
-Program Instance Transform_ArityTwo {C : Category}
+Global Program Instance Transform_ArityTwo {C : Category}
         (P : C -> C -> C)
             `{∀ B, @EndoFunctor C (fun A => P A B)}
             `{∀ A, @EndoFunctor C (fun B => P A B)}
@@ -223,7 +223,7 @@ Program Instance Transform_ArityTwo {C : Category}
                       natural (fun A B => from (f A B))
 }.
 
-Program Instance Transform_ArityThree {C : Category}
+Global Program Instance Transform_ArityThree {C : Category}
         (P : C -> C -> C -> C)
             `{∀ B D : C, @EndoFunctor C (fun A => P A B D)}
             `{∀ A D : C, @EndoFunctor C (fun B => P A B D)}
@@ -237,7 +237,7 @@ Program Instance Transform_ArityThree {C : Category}
                       natural (fun A B D => from (f A B D))
 }.
 
-Program Instance Transform_ArityFour {C : Category}
+Global Program Instance Transform_ArityFour {C : Category}
         (P : C -> C -> C -> C -> C)
             `{∀ B D E : C, @EndoFunctor C (fun A => P A B D E)}
             `{∀ A D E : C, @EndoFunctor C (fun B => P A B D E)}
@@ -254,7 +254,7 @@ Program Instance Transform_ArityFour {C : Category}
 }.
 
 
-Program Instance Transform_ArityFive {C : Category}
+Global Program Instance Transform_ArityFive {C : Category}
         (P : C -> C -> C -> C -> C -> C)
             `{∀ B D E F : C, @EndoFunctor C (fun A => P A B D E F)}
             `{∀ A D E F : C, @EndoFunctor C (fun B => P A B D E F)}

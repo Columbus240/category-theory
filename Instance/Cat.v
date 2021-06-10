@@ -16,7 +16,7 @@ Set Transparent Obligations.
     identity              Identity Functor
     composition           Horizontal composition of Functors *)
 
-Program Instance Cat : Category := {
+Global Program Instance Cat : Category := {
   obj     := Category;
   hom     := @Functor;
   homset  := @Functor_Setoid;
