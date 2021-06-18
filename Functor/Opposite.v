@@ -27,3 +27,15 @@ Proof. reflexivity. Qed.
 
 Definition contramap `{F : C^op ⟶ D} `(f : x ~{C}~> y) :
   F y ~{D}~> F x := fmap (op f).
+
+Global Program Instance Faithful_op {C D F} (H : @Faithful C D F) : Faithful F^op :=
+  {| fmap_inj _ _ _ _ X :=
+       @fmap_inj _ _ _ H _ _ _ _ X |}.
+
+Global Program Instance Full_op {C D F} {H : @Full C D F} : Full F^op :=
+  {| prefmap x y g := @prefmap _ _ _ H _ _ g;
+     prefmap_respects _ _ := prefmap_respects;
+     prefmap_id := prefmap_id;
+     prefmap_comp _ _ _ _ _ := prefmap_comp _ _ _ _ _;
+     fmap_sur _ _ := fmap_sur;
+   |}.
