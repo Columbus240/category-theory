@@ -86,5 +86,5 @@ Arguments unique_obj {_ _ _} _.
 Arguments unique_property {_ _ _} _.
 Arguments uniqueness {_ _ _} _.
 
-Notation "∃! f : A , P" := (Unique (fun f : A => P))
-  (at level 9, f ident, A at level 200, P at level 200) : category_theory_scope.
+Notation "∃! x .. y , P" := (Unique (fun x => .. (Unique (fun y => P)) ..))
+  (at level 200, x binder, y binder, right associativity) : category_theory_scope.
