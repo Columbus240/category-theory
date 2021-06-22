@@ -2,7 +2,6 @@ Set Warnings "-notation-overridden".
 
 Require Import Category.Lib.
 Require Export Category.Theory.Adjunction.
-Require Export Category.Theory.Unique.
 Require Export Category.Instance.Fun.
 Require Import Category.Instance.Cat.
 
@@ -39,7 +38,7 @@ Class LocalRightKan (X : A ⟶ C) := {
   ran_transform : LocalRan ◯ F ⟹ X;
 
   ump_ran (M : B ⟶ C) (μ : M ◯ F ⟹ X) :
-    @Unique Fun _ _ (fun δ => μ ≈ ran_transform ∙ δ ⊲ F)
+    (∃! δ : _, μ ≈ ran_transform ∙ δ ⊲ F);
 }.
 
 (* Wikipedia: "There is also a local definition of 'the Kan extension of a
@@ -108,7 +107,7 @@ Class LocalLeftKan (X : A ⟶ C) := {
   lan_transform : X ⟹ LocalLan ◯ F;
 
   ump_lan (M : B ⟶ C) (ε : X ⟹ M ◯ F) :
-    @Unique Fun _ _  (fun δ => ε ≈ δ ⊲ F ∙ lan_transform)
+    ∃! δ : _, ε ≈ δ ⊲ F ∙ lan_transform;
 }.
 
 Global Program Instance LeftKan_to_LocalLeftKan {R : LeftKan} (X : A ⟶ C) :

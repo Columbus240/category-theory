@@ -75,3 +75,16 @@ Notation "f --> g" := (respectful (Basics.flip f) g)%signature
 
 Arguments Proper {A}%type R%signature m.
 Arguments respectful {A B}%type (R R')%signature _ _.
+
+Class Unique `{S : Setoid A} (P : A -> Type) := {
+  unique_obj : A;
+  unique_property : P unique_obj;
+  uniqueness      : ∀ v : A, P v -> unique_obj ≈ v;
+}.
+
+Arguments unique_obj {_ _ _} _.
+Arguments unique_property {_ _ _} _.
+Arguments uniqueness {_ _ _} _.
+
+Notation "∃! f : A , P" := (Unique (fun f : A => P))
+  (at level 9, f ident, A at level 200, P at level 200) : category_theory_scope.

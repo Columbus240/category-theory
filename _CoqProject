@@ -17,7 +17,6 @@ Theory/Metacategory/ArrowsOnly.v
 Theory/Metacategory/DecideExample.v
 Theory/Morphisms.v
 Theory/Isomorphism.v
-Theory/Unique.v
 Theory/Functor.v
 Theory/Functor/Endo.v
 Theory/Naturality.v
