@@ -89,5 +89,5 @@ End ClosedFunctor.
 Arguments exp_in {_ _ _ _ _ _ _ _ _ _ _} /.
 Arguments exp_out {_ _ _ _ _ _ _ _ _ _ _} /.
 
-Hint Rewrite @exp_in_out : functors.
-Hint Rewrite @exp_out_in : functors.
+Global Hint Rewrite @exp_in_out : functors.
+Global Hint Rewrite @exp_out_in : functors.

@@ -341,12 +341,12 @@ Notation "x ×[ C ] y" := (@product_obj C _ x y)
   (at level 40, left associativity, only parsing) : object_scope.
 Infix "△" := (@fork _ _ _ _ _) (at level 28) : morphism_scope.
 
-Hint Rewrite @exl_fork : categories.
-Hint Rewrite @exr_fork : categories.
-Hint Rewrite @fork_exl_exr : categories.
-Hint Rewrite @swap_invol : categories.
-Hint Rewrite @prod_one_l : isos.
-Hint Rewrite @prod_one_r : isos.
+Global Hint Rewrite @exl_fork : categories.
+Global Hint Rewrite @exr_fork : categories.
+Global Hint Rewrite @fork_exl_exr : categories.
+Global Hint Rewrite @swap_invol : categories.
+Global Hint Rewrite @prod_one_l : isos.
+Global Hint Rewrite @prod_one_r : isos.
 
 Ltac unfork :=
   unfold swap, split, first, second; simpl;

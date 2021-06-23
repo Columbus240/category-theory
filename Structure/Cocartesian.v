@@ -302,11 +302,11 @@ End Cocartesian_.
 Infix "+" := Coprod (at level 50, left associativity) : object_scope.
 Infix "▽" := merge (at level 26) : morphism_scope.
 
-Hint Rewrite @inl_merge : categories.
-Hint Rewrite @inr_merge : categories.
-Hint Rewrite @merge_inl_inr : categories.
-Hint Rewrite @coprod_zero_r : isos.
-Hint Rewrite @coprod_zero_l : isos.
+Global Hint Rewrite @inl_merge : categories.
+Global Hint Rewrite @inr_merge : categories.
+Global Hint Rewrite @merge_inl_inr : categories.
+Global Hint Rewrite @coprod_zero_r : isos.
+Global Hint Rewrite @coprod_zero_l : isos.
 
 Ltac unmerge :=
   unfold paws, cover, left, right; simpl;

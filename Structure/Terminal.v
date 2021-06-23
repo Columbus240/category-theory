@@ -29,7 +29,7 @@ Corollary one_comp `{@Terminal C} {x y : C} {f : x ~> y} :
   one ∘ f ≈ one.
 Proof. intros; apply one_unique. Qed.
 
-Hint Rewrite @one_comp : categories.
+Global Hint Rewrite @one_comp : categories.
 
 Notation "one[ C ]" := (@one _ _ C)
   (at level 9, format "one[ C ]") : morphism_scope.

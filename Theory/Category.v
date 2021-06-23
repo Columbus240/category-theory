@@ -116,8 +116,8 @@ Notation "f << A ~~> B >> g" :=
 
 Coercion obj : Category >-> Sortclass.
 
-Hint Rewrite @id_left : categories.
-Hint Rewrite @id_right : categories.
+Global Hint Rewrite @id_left : categories.
+Global Hint Rewrite @id_right : categories.
 
 Open Scope category_scope.
 Open Scope object_scope.

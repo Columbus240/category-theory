@@ -61,7 +61,7 @@ Notation "fobj[ F ]" := (@fobj _ _ F%functor)
 Notation "fmap[ F ]" := (@fmap _ _ F%functor _ _)
   (at level 9, format "fmap[ F ]") : morphism_scope.
 
-Hint Rewrite @fmap_id : categories.
+Global Hint Rewrite @fmap_id : categories.
 
 Global Program Instance Functor_Setoid {C D : Category} : Setoid (C ⟶ D) := {
   equiv := fun F G =>
