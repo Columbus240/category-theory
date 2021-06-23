@@ -1,4 +1,5 @@
 -R . Category
+-arg -w -arg -deprecated-hint-rewrite-without-locality
 Lib.v
 Lib/Foundation.v
 Lib/Setoid.v
