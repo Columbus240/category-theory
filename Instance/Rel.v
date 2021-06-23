@@ -57,10 +57,11 @@ Qed.
 Next Obligation. firstorder. Qed.
 Next Obligation. firstorder. Qed.
 
-Program Instance Rel_Initial : @Initial Rel := {
+Global Program Instance Rel_Initial : @Initial Rel := {
   terminal_obj := False;
   one := fun _ _ => False_rect _ _
 }.
+Next Obligation. contradiction. Qed.
 
 (*
 Program Instance Rel_Cartesian : @Cartesian Rel := {
@@ -131,7 +132,6 @@ Global Program Instance Relation_Functor : Coq ⟶ Rel := {
   fobj := fun x => x;
   fmap := fun x y (f : x ~{Coq}~> y) x y => In _ (Singleton _ (f x)) y
 }.
-Next Obligation. proper; congruence. Qed.
 Next Obligation. proper; congruence. Qed.
 Next Obligation.
   simplify; firstorder.
