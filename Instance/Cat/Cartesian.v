@@ -10,7 +10,7 @@ Set Primitive Projections.
 Set Universe Polymorphism.
 Unset Transparent Obligations.
 
-Program Instance Cat_Cartesian : @Cartesian Cat := {
+Global Program Instance Cat_Cartesian : @Cartesian Cat := {
   product_obj := @Product;
   fork := fun _ _ _ F G =>
             {| fobj := fun x => (F x, G x)

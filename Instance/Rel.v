@@ -127,7 +127,7 @@ Next Obligation. autounfold in *; apply proof_irrelevance. Qed.
 
 Definition some_number : nat ~{Rel}~> nat := fun x y => (x < y)%nat.
 
-Program Instance Relation_Functor : Coq ⟶ Rel := {
+Global Program Instance Relation_Functor : Coq ⟶ Rel := {
   fobj := fun x => x;
   fmap := fun x y (f : x ~{Coq}~> y) x y => In _ (Singleton _ (f x)) y
 }.

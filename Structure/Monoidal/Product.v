@@ -16,7 +16,7 @@ Unset Transparent Obligations.
 
 Local Obligation Tactic := simpl; intros; simplify; simpl in *.
 
-Program Instance Product_Monoidal `{@Monoidal C} `{@Monoidal D} :
+Global Program Instance Product_Monoidal `{@Monoidal C} `{@Monoidal D} :
   @Monoidal (C ∏ D) := {
   tensor :=
     {| fobj := fun p => (fst (fst p) ⨂ fst (snd p),

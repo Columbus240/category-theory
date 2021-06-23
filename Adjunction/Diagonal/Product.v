@@ -13,7 +13,7 @@ Set Universe Polymorphism.
 (* The diagonal functor on C is left adjoint to the internal product functor
    on C. *)
 
-Program Instance Diagonal_Product_Adjunction (C : Category) `{@Cartesian C} :
+Global Program Instance Diagonal_Product_Adjunction (C : Category) `{@Cartesian C} :
   Δ(C) ⊣ ×(C) := {
   adj := fun _ _ =>
     {| to   := {| morphism := fun f => fst f △ snd f |}

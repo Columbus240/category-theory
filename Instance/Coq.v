@@ -12,7 +12,7 @@ Set Primitive Projections.
 Set Universe Polymorphism.
 Unset Transparent Obligations.
 
-Program Instance Coq : Category := {
+Global Program Instance Coq : Category := {
   obj     := Type;
   hom     := fun A B : Type => A -> B;
   homset  := fun _ _ => {| equiv := fun f g => forall x, f x = g x |};
@@ -22,13 +22,13 @@ Program Instance Coq : Category := {
 Next Obligation. equivalence; congruence. Qed.
 Next Obligation. proper; congruence. Qed.
 
-Program Instance Coq_Terminal : @Terminal Coq := {
+Global Program Instance Coq_Terminal : @Terminal Coq := {
   terminal_obj := unit : Type;
   one := fun _ a => tt
 }.
 Next Obligation. destruct (f x0), (g x0); reflexivity. Qed.
 
-Program Instance Coq_Cartesian : @Cartesian Coq := {
+Global Program Instance Coq_Cartesian : @Cartesian Coq := {
   product_obj := fun x y => x * y : Type;
   fork := fun _ _ _ f g x => (f x, g x);
   exl  := fun _ _ p => fst p;
@@ -44,7 +44,7 @@ Next Obligation.
     rewrite <- surjective_pairing; reflexivity.
 Qed.
 
-Program Instance Coq_Closed : @Closed Coq _ := {
+Global Program Instance Coq_Closed : @Closed Coq _ := {
   exponent_obj := Basics.arrow;
   exp_iso := fun _ _ _ =>
     {| to   := {| morphism := fun f a b => f (a, b) |}
@@ -53,13 +53,13 @@ Program Instance Coq_Closed : @Closed Coq _ := {
 Next Obligation. proper; extensionality X0; congruence. Qed.
 Next Obligation. proper; congruence. Qed.
 
-Program Instance Coq_Initial : Initial Coq := {
+Global Program Instance Coq_Initial : Initial Coq := {
   terminal_obj := False;
   one := fun _ _ => False_rect _ _
 }.
 Next Obligation. contradiction. Qed.
 
-Program Instance Coq_Cocartesian : @Cocartesian Coq := {
+Global Program Instance Coq_Cocartesian : @Cocartesian Coq := {
   product_obj := sum;
   fork := fun _ _ _ f g x =>
             match x with
@@ -135,7 +135,7 @@ Qed.
 Next Obligation. now destruct x0. Qed.
 Next Obligation. now destruct x0. Qed.
 
-Program Instance optionF : EndoFunctor option :=
+Global Program Instance optionF : EndoFunctor option :=
   Functor_EndoFunctor (F:=option_Functor).
 
 Global Program Instance option_Monad : @Monad Coq option_Functor := {
@@ -179,5 +179,5 @@ Next Obligation.
   now rewrite IHx0.
 Qed.
 
-Program Instance listF : EndoFunctor list :=
+Global Program Instance listF : EndoFunctor list :=
   Functor_EndoFunctor (F:=list_Functor).

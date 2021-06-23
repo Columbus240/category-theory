@@ -209,6 +209,6 @@ Qed.
 
 End BiCCC.
 
-Program Instance BiCCC_Distributive {C : Category}
+Global Program Instance BiCCC_Distributive {C : Category}
         `{@Cartesian C} `{@Cocartesian C} `{@Closed C _} `{@Initial C} :
   @Distributive C _ _ _.
