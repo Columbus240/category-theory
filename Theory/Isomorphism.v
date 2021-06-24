@@ -232,6 +232,27 @@ Qed.
 
 Notation "f ⊙ g" := (@iso_compose _ _ _ _ f g) (at level 40, left associativity).
 
+Lemma iso_from_unique {C : Category} {x y : C} (iso : x ≅ y) (g : y ~> x) :
+  iso ∘ g ≈ id ->
+  g ∘ iso ≈ id ->
+  g ≈ from iso.
+Proof.
+  intros.
+  rewrite <- id_left.
+  rewrite <- (iso_from_to iso).
+  rewrite comp_assoc_sym.
+  rewrite X.
+  apply id_right.
+Qed.
+
+Corollary iso_to_unique {C : Category} {x y : C} (iso : x ≅ y) (g : x ~> y) :
+  (from iso) ∘ g ≈ id ->
+  g ∘ (from iso) ≈ id ->
+  g ≈ to iso.
+Proof.
+  apply (Isomorphism_from_unique (iso_sym iso)).
+Qed.
+
 (* A property is called [Invariant] if it is preserved by
    isomorphisms. *)
 Definition Invariant {C : Category} (P : C -> Type) :=
