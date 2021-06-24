@@ -18,7 +18,7 @@ Import EqNotations.
    categories up to equivalence.
 
    So we define a category to be discrete, if all morphisms are
-   isomorphisms and all morphisms are equal (i.e. [≈]).
+   isomorphisms and all parallel morphisms are equal (i.e. [≈]).
    I.e. a thin Groupoid.
 *)
 Definition is_Discrete (C : Category) :=
